@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-exercise
+  namespace: devops-exercise
+  labels:
+    app: devops-exercise
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-exercise
+  template:
+    metadata:
+      labels:
+        app: devops-exercise
+    spec:
+      containers:
+      - name: devops-exercise
+        image: sergiojrp/exercise-devops:1.0
+        imagePullPolicy: Always  
+        env:
+          - name: TZ
+            value: America/Mexico_City
+        ports:
+        - containerPort: 5000
+          name: portal
+          protocol: TCP
+      restartPolicy: Always
+status: {}
+
