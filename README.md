@@ -21,7 +21,7 @@ Este ejercicio contiene un servicio en Python con flask que se encarga de visual
 ## CREACIÓN DE IMAGEN PARA CONTENEDOR.
 
 <br>
-Con la ayuda de los siguientes comandos, crear un directorio con el nombre devops-exercise y poscisionarse dentro de el.
+Con la ayuda de los siguientes comandos, crear un directorio con el nombre devops-exercise y posisionarse dentro de el.
 
 <br>
 
@@ -32,7 +32,7 @@ cd ~/devops-exercise
 ```
 <br>
 
-Crear los siguientes archivos.
+Con la ayuda de el siguiente comando, crear los siguientes archivos.
 
 ```bash
 touch requirement.txt app.py Dockerfile
@@ -94,8 +94,8 @@ Ejecutar el siguiente comando para comenzar con la creacion de la imagen.
 ```bash
 docker build -t exercise-devops .
 ```
-
-se comenzará con el proceso de la creación de la imagen, esto demorara unos minutos, al finalizar veremos algo como lo siguiente.
+<br>
+Se comenzará con el proceso de creación de la imagen, esto demorará unos minutos, al finalizar veremos algo como lo siguiente.
 
 ```bash
 serch@macserch devops-exercise % docker build -t exercise-devops .            
@@ -121,12 +121,27 @@ serch@macserch devops-exercise % docker build -t exercise-devops .
                                                                                                                                
 Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them  
 ```
+
+<br>
+Ahora procederemos a validar nuestra imagen creada, ejecutando el siguiente comando.
+
+```bash
+docker images
+```
+
+<br>
+Obteniendo algo como lo siguiente.
+
+```bash
+REPOSITORY                  TAG       IMAGE ID       CREATED         SIZE
+exercise-devops             latest    15f38e3b9507   2 hours ago     130MB
+```
 <br>
 
 ## EJECUCIÓN EN DOCKER.
 
 <br>
-Ya estando creada la imagen, paso seguido es ejecutar el contenedor para realizar una prueba ejecutando el siguiente comando.
+Ya estando creada la imagen, paso seguido es ejecutar el contenedor para realizar una prueba de visualización de contenido, ejecutando el siguiente comando.
 
 ```bash
 docker run -it -p 5000:5000  exercise-devops
@@ -152,15 +167,16 @@ Nos deberá mostrar algo como lo siguiente:
 ```
 
 <br>
-Esto nos indicara que el servicio ya esta en ejecucion y estara escuchando por el puerto 5000 mismo puerto que se esta exponiendo al ejecutar la imagen.
+Esto nos indicará que el servicio ya esta en ejecución y estara escuchando por el puerto 5000 mismo puerto que se esta exponiendo al ejecutar la imagen.
 
+<br>
 Abrir un navegador web y consultar la siguiente url.
 
 ```
 localhost:5000
 ```
 
-En el navegador se debera mostrar lo siguiente.
+En el navegador se deberá mostrar lo siguiente.
 
 ![Image text](./img/01_Visualizacion_flask_docker.png)
 
@@ -208,6 +224,7 @@ REPOSITORY                  TAG       IMAGE ID       CREATED          SIZE
 exercise-devops             latest    15f38e3b9507   40 minutes ago   130MB
 sergiojrp/exercise-devops   1.0       15f38e3b9507   40 minutes ago   130MB
 ```
+<br>
 
 ### Subir imagen a repositorio de docker hub.
 <br>
@@ -217,6 +234,7 @@ Ejecutar el siguiente comando.
 docker push sergiojrp/exercise-devops:1.0 
 ```
 
+<br>
 Al ejecutar esto por primera vez, te pedira las credenciales de acceso con las que se ingresa a la cuenta de docker hub.
 
 Despues comenzará con la carga de la imagen al repositorio, al finalizar, mostrará algo como lo siguiente.
@@ -232,7 +250,7 @@ c729ff34192b: Pushed
 9fb3aa2f8b80: Layer already exists 
 1.0: digest: sha256:d23b764a5b78e8490efa1abcb6c2ffcbaff0a710d407eb0645eab19856fbd7d1 size: 1571
 ```
-
+<br>
 
 ### Creación de archivos para despliegue en KS8.
 
@@ -322,7 +340,7 @@ status: {}
 <br>
 Al finalizar de cargar el contenido a los archivos,  ejecutar los siguientes comandos para comenzar a desplegar los servicios.
 
-<br>
+<br><br>
 
 Creación de Namespace
 ```bash
@@ -362,7 +380,7 @@ serch@macserch KS8 % kubectl apply -f svc-devops-exercise.yml
 service/devops-exercise created
 ```
 <br>
-Ahora ejecutar el siguiente comando para revisar los servicios que se estan ejecutando en ese namespace.
+Ahora, ejecutar el siguiente comando para revisar los servicios que se estan ejecutando en nuestro namespace.
 
 ```bash
 kubectl get all -n devops-exercise
@@ -385,6 +403,7 @@ NAME                                        DESIRED   CURRENT   READY   AGE
 replicaset.apps/devops-exercise-696bd796c   2         2         2       119s
 ```
 
+<br>
 Esto nos indica lo siguiente:
 
 * Se inicializaron 2 pods para la consulta de nuestro servicio de flask, esto debido a que en el archivo deploy-devops-exercise.yml  se especifico que se iniciara con 2 replicas.
